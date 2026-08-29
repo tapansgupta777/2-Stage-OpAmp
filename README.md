@@ -34,23 +34,23 @@ $$C_c \ge 0.22 \times 2\text{ pF} = 440\text{ fF}$$
 
 Slew rate requirements dictate the tail current:
 $$I_5 = \text{SR} \times C_c$$
-$$I_5 = (20\text{ V/\mu s}) \times 800\text{ fF} = 16\text{ \mu A}$$
+$$I_5 = (20\text{ V/u s}) \times 800\text{ fF} = 16\text{ u A}$$
 *   **Selected Tail Current ($I_5$):** 20 uA.
 *   **Branch Current ($I_D$):** 10 uA per branch.
 
 ### 2. Differential Input Pair (M1, M2)
 The required transconductance ($g_{m1}$) for a 30 MHz GBW is:
 $$g_{m1} = \text{GBW} \times C_c \times 2\pi$$
-$$g_{m1} = 30\text{ MHz} \times 800\text{ fF} \times 2\pi \approx 150\text{ \mu S} \rightarrow \mathbf{160\text{ \mu S}}$$
+$$g_{m1} = 30\text{ MHz} \times 800\text{ fF} \times 2\pi \approx 150\text{ u S} \rightarrow \mathbf{160\text{ u S}}$$
 
-Calculating the aspect ratio using $\mu_n C_{ox} = 207\text{ \mu A/V}^2$:
-$$(\frac{W}{L})_{1,2} = \frac{g_{m1}^2}{\mu_n C_{ox} (2 I_D)}$$
-$$(\frac{W}{L})_{1,2} = \frac{(160\text{ \mu S})^2}{207\text{ \mu A/V}^2 \times 20\text{ \mu A}} \approx \mathbf{6.18}$$
+Calculating the aspect ratio using $u_n C_{ox} = 207\text{ u A/V}^2$:
+$$(\frac{W}{L})_{1,2} = \frac{g_{m1}^2}{u_n C_{ox} (2 I_D)}$$
+$$(\frac{W}{L})_{1,2} = \frac{(160\text{ u S})^2}{207\text{ u A/V}^2 \times 20\text{ u A}} \approx \mathbf{6.18}$$
 
 ### 3. Active Load (M3, M4) & ICMR+
 To guarantee survival at the 1.6 V Input Common-Mode Range (ICMR) maximum, the PMOS threshold voltage ($V_{T3}$) was extracted as 0.3906 V, and the NMOS threshold ($V_{T1}$) was assumed to shift to 0.3862 V due to the body effect.
-$$(\frac{W}{L})_{3,4} = \frac{2 I_{D3}}{\mu_p C_{ox} [V_{DD} - \text{ICMR+} - |V_{T3}|_{max} + V_{T1(min)}]^2}$$
-Using $\mu_p C_{ox} = 55\text{ \mu A/V}^2$:
+$$(\frac{W}{L})_{3,4} = \frac{2 I_{D3}}{_p C_{ox} [V_{DD} - \text{ICMR+} - |V_{T3}|_{max} + V_{T1(min)}]^2}$$
+Using $u_p C_{ox} = 55\text{ u A/V}^2$:
 $$(\frac{W}{L})_{3,4} = \mathbf{9.5}$$
 
 ### 4. Tail Current Mirror (M5) & ICMR-
@@ -58,12 +58,12 @@ To keep M5 out of the triode region at the 0.8 V ICMR limit, the worst-case maxi
 $$V_{DSAT5} \le \text{ICMR-} - V_{OV1} - V_{T1(max)}$$
 $$V_{DSAT5} \le 0.8\text{ V} - 0.125\text{ V} - 0.49\text{ V} = \mathbf{184\text{ mV}}$$
 
-$$(\frac{W}{L})_5 = \frac{2 I_{D5}}{\mu_n C_{ox} (V_{DSAT5})^2}$$
+$$(\frac{W}{L})_5 = \frac{2 I_{D5}}{u_n C_{ox} (V_{DSAT5})^2}$$
 $$(\frac{W}{L})_5 = \mathbf{5.7}$$
 
 ### 5. Second Stage (M6, M7)
 To ensure the second pole does not degrade the phase margin, $g_{m6}$ must be significantly larger than $g_{m1}$.
-$$g_{m6} \ge 10 \times g_{m1} \rightarrow \mathbf{1600\text{ \mu S}}$$
+$$g_{m6} \ge 10 \times g_{m1} \rightarrow \mathbf{1600\text{ u S}}$$
 
 Scaling from M4 to achieve this massive transconductance:
 $$(\frac{W}{L})_6 = \mathbf{149}$$
@@ -75,7 +75,7 @@ $$(\frac{W}{L})_7 = \frac{I_7}{I_5} (\frac{W}{L})_5 = \mathbf{45}$$
 
 During LTspice `.op` and `.ac` verification with Level 49 models, physical non-idealities required strategic tuning of the calculated aspect ratios:
 
-1. **The Power Budget Crisis:** The initial second-stage sizing ($W_7 = 45\text{ \mu m}$) drew 157 uA of current, causing the total chip power dissipation to violate the 300 uW budget.
+1. **The Power Budget Crisis:** The initial second-stage sizing ($W_7 = 45\text{ u m}$) drew 157 uA of current, causing the total chip power dissipation to violate the 300 uW budget.
 2. **The High-Impedance Tug-of-War:** To save power, the NMOS sinker (M7) width was throttled down. This starved the PMOS driver (M6) and pushed it into the triode region, destroying the voltage gain.
 3. **The Balance:** A rigorous tuning sweep was performed on M6 (74.5 um $\to$ 63 um $\to$ 128 um $\to$ 63 um) and M7 (22.5 um $\to$ 14.25 um $\to$ 40 um $\to$ 20 um) until the output node balanced perfectly, restoring deep saturation and pushing the DC gain back to $\ge 68\text{ dB}$.
 4. **Parasitic Capacitance Limits:** Channel lengths ($L$) were tested at 1 um to boost output resistance, but the quadrupled gate capacitance choked the GBW at the ICMR- boundary. The design was rolled back to the 500 nm baseline, which successfully secured the 30 MHz GBW across all process corners. 
