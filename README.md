@@ -16,9 +16,9 @@ The amplifier was designed to balance high-speed transient response with strict 
 | **DC Gain** | $\ge$ 60 dB (1000 V/V) | 70 dB | 68 dB |
 | **Gain-Bandwidth (GBW)** | $\ge$ 30 MHz | 35 MHz | 31 MHz |
 | **Phase Margin (PM)** | $\ge$ 60° | 61° | 65° |
-| **Slew Rate (SR)** | $\ge$ 20 V/µs | 28 V/µs | 28 V/µs |
+| **Slew Rate (SR)** | $\ge$ 20 V/us | 28 V/us | 28 V/us |
 | **Load Capacitance (CL)**| 2 pF | 2 pF | 2 pF |
-| **Power Dissipation** | $\le$ 300 µW | < 300 µW | < 300 µW |
+| **Power Dissipation** | $\le$ 300 uW | < 300 uW | < 300 uW |
 
 ---
 
@@ -35,8 +35,8 @@ $$C_c \ge 0.22 \times 2\text{ pF} = 440\text{ fF}$$
 Slew rate requirements dictate the tail current:
 $$I_5 = \text{SR} \times C_c$$
 $$I_5 = (20\text{ V/\mu s}) \times 800\text{ fF} = 16\text{ \mu A}$$
-*   **Selected Tail Current ($I_5$):** 20 µA.
-*   **Branch Current ($I_D$):** 10 µA per branch.
+*   **Selected Tail Current ($I_5$):** 20 uA.
+*   **Branch Current ($I_D$):** 10 uA per branch.
 
 ### 2. Differential Input Pair (M1, M2)
 The required transconductance ($g_{m1}$) for a 30 MHz GBW is:
@@ -75,10 +75,10 @@ $$(\frac{W}{L})_7 = \frac{I_7}{I_5} (\frac{W}{L})_5 = \mathbf{45}$$
 
 During LTspice `.op` and `.ac` verification with Level 49 models, physical non-idealities required strategic tuning of the calculated aspect ratios:
 
-1. **The Power Budget Crisis:** The initial second-stage sizing ($W_7 = 45\text{ \mu m}$) drew 157 µA of current, causing the total chip power dissipation to violate the 300 µW budget.
+1. **The Power Budget Crisis:** The initial second-stage sizing ($W_7 = 45\text{ \mu m}$) drew 157 uA of current, causing the total chip power dissipation to violate the 300 uW budget.
 2. **The High-Impedance Tug-of-War:** To save power, the NMOS sinker (M7) width was throttled down. This starved the PMOS driver (M6) and pushed it into the triode region, destroying the voltage gain.
-3. **The Balance:** A rigorous tuning sweep was performed on M6 (74.5 µm $\to$ 63 µm $\to$ 128 µm $\to$ 63 µm) and M7 (22.5 µm $\to$ 14.25 µm $\to$ 40 µm $\to$ 20 µm) until the output node balanced perfectly, restoring deep saturation and pushing the DC gain back to $\ge 68\text{ dB}$.
-4. **Parasitic Capacitance Limits:** Channel lengths ($L$) were tested at 1 µm to boost output resistance, but the quadrupled gate capacitance choked the GBW at the ICMR- boundary. The design was rolled back to the 500 nm baseline, which successfully secured the 30 MHz GBW across all process corners. 
+3. **The Balance:** A rigorous tuning sweep was performed on M6 (74.5 um $\to$ 63 um $\to$ 128 um $\to$ 63 um) and M7 (22.5 um $\to$ 14.25 um $\to$ 40 um $\to$ 20 um) until the output node balanced perfectly, restoring deep saturation and pushing the DC gain back to $\ge 68\text{ dB}$.
+4. **Parasitic Capacitance Limits:** Channel lengths ($L$) were tested at 1 um to boost output resistance, but the quadrupled gate capacitance choked the GBW at the ICMR- boundary. The design was rolled back to the 500 nm baseline, which successfully secured the 30 MHz GBW across all process corners. 
 
 ---
 *Verified via LTspice using TSMC 180nm foundry models.*
