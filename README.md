@@ -1,17 +1,17 @@
-# Two-Stage CMOS Operational Amplifier (TSMC 180nm)
+# Two-Stage CMOS Operational Amplifier (180nm)
 
 **Author:** Tapan Sanjeevkumar Gupta | AISSMS College of Engineering (SPPU)
 **Project Context:** Analog IC Design / High-Speed Front-End
 
-This repository contains the complete design, hand calculations, and LTspice verification for a custom two-stage CMOS operational amplifier designed in a standard TSMC 180nm process. The architecture utilizes a differential input pair with an active current mirror load, followed by a common-source second stage and Miller pole-splitting compensation.
+This repository contains the complete design, hand calculations, and LTspice verification for a custom two-stage CMOS operational amplifier designed in a standard  180nm process. The architecture utilizes a differential input pair with an active current mirror load, followed by a common-source second stage and Miller pole-splitting compensation.
 
-## 🎯 Design Specifications & Final Results
+##  Design Specifications & Final Results
 
 The amplifier was designed to balance high-speed transient response with strict low-power constraints. 
 
 | Parameter | Target Specification | Achieved Result (ICMR+) | Achieved Result (ICMR-) |
 | :--- | :--- | :--- | :--- |
-| **Technology** | TSMC 180nm | TSMC 180nm | TSMC 180nm |
+| **Technology** | 180nm | 180nm | 180nm |
 | **Supply Voltage (VDD)** | 1.8 V | 1.8 V | 1.8 V |
 | **DC Gain** | ≥ 60 dB (1000 V/V) | 70 dB | 68 dB |
 | **Gain-Bandwidth (GBW)** | ≥ 30 MHz | 35 MHz | 31 MHz |
@@ -22,7 +22,7 @@ The amplifier was designed to balance high-speed transient response with strict 
 
 ---
 
-## 🧮 Comprehensive Hand Calculations
+##  Comprehensive Hand Calculations
 
 The component sizing was executed through rigorous Phase-1 hand calculations before being mapped to the BSIM3 Level 49 SPICE models. 
 
@@ -90,7 +90,7 @@ $$(\frac{W}{L})_7 = \frac{I_7}{I_5} (\frac{W}{L})_5 = \mathbf{45}$$
 
 ---
 
-## 🛠️ Simulation Tuning & Silicon Trade-offs
+##  Simulation Tuning & Silicon Trade-offs
 
 During LTspice `.op` and `.ac` verification with Level 49 models, physical non-idealities required strategic tuning of the calculated aspect ratios:
 
@@ -100,4 +100,4 @@ During LTspice `.op` and `.ac` verification with Level 49 models, physical non-i
 4. **Parasitic Capacitance Limits:** Channel lengths ($L$) were tested at 1 µm to boost output resistance, but the quadrupled gate capacitance choked the GBW at the ICMR- boundary. The design was rolled back to the 500 nm baseline, which successfully secured the 30 MHz GBW across all process corners. 
 
 ---
-*Verified via LTspice using TSMC 180nm foundry models.*
+*Verified via LTspice using  180nm foundry models.*
