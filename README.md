@@ -1,6 +1,5 @@
 # Two-Stage CMOS Operational Amplifier (180nm)
 
-**Author:** Tapan Sanjeevkumar Gupta | AISSMS College of Engineering (SPPU)
 **Project Context:** Analog IC Design / High-Speed Front-End
 
 This repository contains the complete design, hand calculations, and LTspice verification for a custom two-stage CMOS operational amplifier designed in a standard  180nm process. The architecture utilizes a differential input pair with an active current mirror load, followed by a common-source second stage and Miller pole-splitting compensation.
