@@ -2,9 +2,15 @@
 
 **Project Context:** Analog IC Design / High-Speed Front-End
 
-This repository contains the complete design, hand calculations, and LTspice verification for a custom two-stage CMOS operational amplifier designed in a standard  180nm process. The architecture utilizes a differential input pair with an active current mirror load, followed by a common-source second stage and Miller pole-splitting compensation.
+This repository contains the complete design, hand calculations, and LTspice verification for a custom two-stage CMOS operational amplifier designed in a standard 180nm process. The architecture utilizes a differential input pair with an active current mirror load, followed by a common-source second stage and Miller pole-splitting compensation.
 
-##  Design Specifications & Final Results
+### Schematic Overview
+![Op-Amp Schematic](MetaData/OpAmp.png)
+*Figure 1: Transistor-level schematic of the two-stage amplifier with Miller compensation.*
+
+---
+
+## 🎯 Design Specifications & Final Results
 
 The amplifier was designed to balance high-speed transient response with strict low-power constraints. 
 
@@ -19,9 +25,19 @@ The amplifier was designed to balance high-speed transient response with strict 
 | **Load Capacitance (CL)**| 2 pF | 2 pF | 2 pF |
 | **Power Dissipation** | ≤ 300 µW | < 300 µW | < 300 µW |
 
+### Simulation Results
+
+**AC Analysis (Frequency Response)**
+![Frequency Response](MetaData/Frequency-Response.png)
+*Figure 2: Bode plot demonstrating a DC gain of >68 dB, a GBW of >30 MHz, and a Phase Margin of >60° across the input common-mode range.*
+
+**Transient Analysis (Slew Rate)**
+![Slew Rate](MetaData/Slew-Rate.png)
+*Figure 3: Large-signal step response in a unity-gain buffer configuration, confirming a rising-edge slew rate of 28 V/µs.*
+
 ---
 
-##  Comprehensive Hand Calculations
+## 🧮 Comprehensive Hand Calculations
 
 The component sizing was executed through rigorous Phase-1 hand calculations before being mapped to the BSIM3 Level 49 SPICE models. 
 
@@ -38,7 +54,7 @@ Slew rate requirements dictate the tail current:
 
 $$I_5 = \text{SR} \times C_c$$
 
-$$I_5 = (20\text{ V/u s}) \times 800\text{ fF} = 16\text{ u A}$$
+$$I_5 = (20\text{ V/µs}) \times 800\text{ fF} = 16\text{ µA}$$
 
 *   **Selected Tail Current ($I_5$):** 20 µA.
 *   **Branch Current ($I_D$):** 10 µA per branch.
@@ -48,20 +64,20 @@ The required transconductance ($g_{m1}$) for a 30 MHz GBW is:
 
 $$g_{m1} = \text{GBW} \times C_c \times 2\pi$$
 
-$$g_{m1} = 30\text{ MHz} \times 800\text{ fF} \times 2\pi \approx 150\text{ u S} \rightarrow \mathbf{160\text{ u S}}$$
+$$g_{m1} = 30\text{ MHz} \times 800\text{ fF} \times 2\pi \approx 150\text{ µS} \rightarrow \mathbf{160\text{ µS}}$$
 
-Calculating the aspect ratio using $u_n C_{ox} = 207\text{ u A/V}^2$:
+Calculating the aspect ratio using $µ_n C_{ox} = 207\text{ µA/V}^2$:
 
-$$(\frac{W}{L})_{1,2} = \frac{g_{m1}^2}{u_n C_{ox} (2 I_D)}$$
+$$(\frac{W}{L})_{1,2} = \frac{g_{m1}^2}{µ_n C_{ox} (2 I_D)}$$
 
-$$(\frac{W}{L})_{1,2} = \frac{(160\text{ u S})^2}{207\text{ u A/V}^2 \times 20\text{ u A}} \approx \mathbf{6.18}$$
+$$(\frac{W}{L})_{1,2} = \frac{(160\text{ µS})^2}{207\text{ µA/V}^2 \times 20\text{ µA}} \approx \mathbf{6.18}$$
 
 ### 3. Active Load (M3, M4) & ICMR+
 To guarantee survival at the 1.6 V Input Common-Mode Range (ICMR) maximum, the PMOS threshold voltage ($V_{T3}$) was extracted as 0.3906 V, and the NMOS threshold ($V_{T1}$) was assumed to shift to 0.3862 V due to the body effect.
 
-$$(\frac{W}{L})_{3,4} = \frac{2 I_{D3}}{u_p C_{ox} [V_{DD} - \text{ICMR+} - |V_{T3}|_{max} + V_{T1(min)}]^2}$$
+$$(\frac{W}{L})_{3,4} = \frac{2 I_{D3}}{µ_p C_{ox} [V_{DD} - \text{ICMR+} - |V_{T3}|_{max} + V_{T1(min)}]^2}$$
 
-Using $u_p C_{ox} = 55\text{ u A/V}^2$:
+Using $µ_p C_{ox} = 55\text{ µA/V}^2$:
 
 $$(\frac{W}{L})_{3,4} = \mathbf{9.5}$$
 
@@ -72,14 +88,14 @@ $$V_{DSAT5} \le \text{ICMR-} - V_{OV1} - V_{T1(max)}$$
 
 $$V_{DSAT5} \le 0.8\text{ V} - 0.125\text{ V} - 0.49\text{ V} = \mathbf{184\text{ mV}}$$
 
-$$(\frac{W}{L})_5 = \frac{2 I_{D5}}{u_n C_{ox} (V_{DSAT5})^2}$$
+$$(\frac{W}{L})_5 = \frac{2 I_{D5}}{µ_n C_{ox} (V_{DSAT5})^2}$$
 
 $$(\frac{W}{L})_5 = \mathbf{5.7}$$
 
 ### 5. Second Stage (M6, M7)
 To ensure the second pole does not degrade the phase margin, $g_{m6}$ must be significantly larger than $g_{m1}$.
 
-$$g_{m6} \ge 10 \times g_{m1} \rightarrow \mathbf{1600\text{ u S}}$$
+$$g_{m6} \ge 10 \times g_{m1} \rightarrow \mathbf{1600\text{ µS}}$$
 
 Scaling from M4 to achieve this massive transconductance:
 
@@ -89,7 +105,7 @@ $$(\frac{W}{L})_7 = \frac{I_7}{I_5} (\frac{W}{L})_5 = \mathbf{45}$$
 
 ---
 
-##  Simulation Tuning & Silicon Trade-offs
+## 🛠️ Simulation Tuning & Silicon Trade-offs
 
 During LTspice `.op` and `.ac` verification with Level 49 models, physical non-idealities required strategic tuning of the calculated aspect ratios:
 
@@ -99,4 +115,4 @@ During LTspice `.op` and `.ac` verification with Level 49 models, physical non-i
 4. **Parasitic Capacitance Limits:** Channel lengths ($L$) were tested at 1 µm to boost output resistance, but the quadrupled gate capacitance choked the GBW at the ICMR- boundary. The design was rolled back to the 500 nm baseline, which successfully secured the 30 MHz GBW across all process corners. 
 
 ---
-*Verified via LTspice using  180nm foundry models.*
+*Verified via LTspice using 180nm foundry models.*
