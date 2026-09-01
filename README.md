@@ -10,7 +10,7 @@ This repository contains the complete design, hand calculations, and LTspice ver
 
 ---
 
-## 🎯 Design Specifications & Final Results
+##  Design Specifications & Final Results
 
 The amplifier was designed to balance high-speed transient response with strict low-power constraints. 
 
@@ -37,7 +37,7 @@ The amplifier was designed to balance high-speed transient response with strict 
 
 ---
 
-## 🧮 Comprehensive Hand Calculations
+##  Comprehensive Hand Calculations
 
 The component sizing was executed through rigorous Phase-1 hand calculations before being mapped to the BSIM3 Level 49 SPICE models. 
 
@@ -105,7 +105,7 @@ $$(\frac{W}{L})_7 = \frac{I_7}{I_5} (\frac{W}{L})_5 = \mathbf{45}$$
 
 ---
 
-## 🛠️ Simulation Tuning & Silicon Trade-offs
+##  Simulation Tuning & Silicon Trade-offs
 
 During LTspice `.op` and `.ac` verification with Level 49 models, physical non-idealities required strategic tuning of the calculated aspect ratios:
 
